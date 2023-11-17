@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useFetch } from ".././utils/useFetch";
+
+type Pet = {
+  id: Number;
+  created: String;
+  description: String;
+  title: String;
+  url: String;
+};
 
 function App() {
   //Fetch Data
-  const fetchPetData = async () => {
-    const response = await fetch("https://eulerity-hackathon.appspot.com/pets");
-    const data = await response.json();
-    console.log(data);
-  };
-  fetchPetData();
+
+  const url = "https://eulerity-hackathon.appspot.com/pets";
+  const { data, error, loading } = useFetch<Pet[]>(url);
+  console.log(data[0]);
 
   return <></>;
 }
