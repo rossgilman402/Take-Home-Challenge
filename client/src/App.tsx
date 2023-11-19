@@ -13,7 +13,7 @@ function App() {
 
   const url = "https://eulerity-hackathon.appspot.com/pets";
   const { data, error, loading } = useFetch<Pet[]>(url);
-  console.log(data[0]);
+  console.log(data);
 
   return <></>;
 }
