@@ -33,6 +33,29 @@ const resolvers = {
 
       return { token, user };
     },
+    addPostToUser: async (_, { title, description, url, created }, context) => {
+      try {
+        //Create the Post then add to user
+        const newPost = await Post.create({
+          title,
+          description,
+          url,
+          created,
+          user: context.user_id,
+        });
+        console.log(newPost);
+
+        const user = await User.findOne({ _id: context.user._id });
+        user.posts.push(newPost._id);
+        await user.save();
+        console.log(user);
+
+        return newPost;
+      } catch (Error) {
+        console.log(Error);
+      }
+    },
+    // addPostToUser(title: String!, description: String!, url: String!, created: String!): Post
   },
 };
 
