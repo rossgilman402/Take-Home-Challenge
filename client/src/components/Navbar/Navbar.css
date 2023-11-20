@@ -1,0 +1,35 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 35px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-container li,
+a {
+  list-style-type: none;
+  text-decoration: none;
+  font-size: 20px;
+  color: brown;
+  transition: color 0.3s ease;
+}
+
+.navbar-container li a:hover {
+  color: black;
+  text-decoration: underline;
+  text-underline-offset: 15px;
+}
+
+@media screen and (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
