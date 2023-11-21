@@ -1,10 +1,16 @@
 import Auth from "../../utils/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 export const Navbar = () => {
   const authProfile = Auth.getProfile() as { data: { _id: string } } | null;
   const userId = authProfile?.data?._id;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Auth.logout();
+    navigate("/");
+  };
 
   return (
     <div className="header-container">
@@ -26,7 +32,7 @@ export const Navbar = () => {
           )}
           <li>
             {Auth.loggedIn() ? (
-              <Link to="/" onClick={() => Auth.logout()}>
+              <Link to="/" onClick={handleLogout}>
                 Logout
               </Link>
             ) : (

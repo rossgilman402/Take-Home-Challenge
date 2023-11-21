@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../utils/query";
 import Auth from "../../utils/auth";
 
-// Define what a post and post data will return
+//Types for the data within a post
 interface Post {
   _id: string;
   title: string;
@@ -16,42 +16,39 @@ interface Post {
   };
 }
 
+//The type for results when calling getPosts
 interface GetPostsData {
   getPosts: Post[];
 }
 
 const Dashboard: React.FC = () => {
+  //State so that we can store input, posts that are checked off and which order is selected
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchInput, setSearchInput] = useState<string>("");
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  // Use the useQuery hook to execute the GET_POSTS query
+  //Initalizing the useQuery for getting all of the posts to be rendered on the page
   const { loading, error, data } = useQuery<GetPostsData>(GET_POSTS);
 
-  // Display loading until the page is ready to show the full render
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  // Return an error to the page if the posts are unable to be fetched
   if (error) {
     console.error("Error fetching posts:", error);
     return <p>Error fetching posts</p>;
   }
 
-  // Create a variable to store posts or empty if null
-  // ? is for optional chaining that allows accessing data even if it can be null
   const posts = data?.getPosts || [];
-  console.log(posts);
 
-  // Filter posts based on search input
+  //We want to filer the posts based on what the user inputs
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchInput.toLowerCase()) ||
       post.description.toLowerCase().includes(searchInput.toLowerCase())
   );
 
-  // Sort posts based on user-selected options
-  //Use localeCompare to sort the list
+  //We want to sort the post by asc or desc
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     const compareFieldA = a.title;
     const compareFieldB = b.title;
@@ -62,6 +59,32 @@ const Dashboard: React.FC = () => {
       return compareFieldB.localeCompare(compareFieldA);
     }
   });
+
+  //When a certain card is checked off it is added to the selectedPosts state so that we can eventually download
+  //If the post is already selected we want to find it in selected posts state and uncheck it
+  const toggleSelection = (postId: string) => {
+    if (selectedPosts.includes(postId)) {
+      setSelectedPosts(selectedPosts.filter((id) => id !== postId));
+    } else {
+      setSelectedPosts([...selectedPosts, postId]);
+    }
+  };
+
+  const handleDownload = () => {
+    selectedPosts.forEach((postId) => {
+      const post = sortedPosts.find((p) => p._id === postId);
+
+      if (post && post.url) {
+        // Create a temporary anchor element
+        const link = document.createElement("a");
+        link.href = post.url;
+        link.download = `${post.title}.jpg`; // You can customize the filename here
+
+        // Trigger a click event on the anchor element
+        link.click();
+      }
+    });
+  };
 
   return (
     <div className="post-list-container">
@@ -90,6 +113,11 @@ const Dashboard: React.FC = () => {
         <div className="post-cards-container">
           {sortedPosts.map((post) => (
             <div key={post._id} className="post-card">
+              <input
+                type="checkbox"
+                checked={selectedPosts.includes(post._id)}
+                onChange={() => toggleSelection(post._id)}
+              />
               <h2>{post.title}</h2>
               <p>{post.description}</p>
               <p>Created by: {post?.user?.username}</p>
@@ -101,6 +129,9 @@ const Dashboard: React.FC = () => {
       ) : (
         <p>You need to be logged in to see the posts.</p>
       )}
+      <button onClick={handleDownload} disabled={selectedPosts.length === 0}>
+        Download Selected
+      </button>
     </div>
   );
 };
