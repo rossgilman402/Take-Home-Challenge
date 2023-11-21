@@ -1,0 +1,46 @@
+/* PostDetailPage.css */
+
+.post-detail-container {
+  padding: 20px;
+}
+
+.post-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.post-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.post-description {
+  margin-bottom: 10px;
+}
+
+.post-created {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.edit-button,
+.delete-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #217dbb;
+}

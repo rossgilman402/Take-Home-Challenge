@@ -29,6 +29,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+//The ApolloProvider allows for the useQuery and useMutation to be created and called
+//so that we can fetch the data from the backend GraphQL Database
 function App() {
   return (
     <>

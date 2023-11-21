@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 export const Navbar = () => {
+  const authProfile = Auth.getProfile() as { data: { _id: string } } | null;
+  const userId = authProfile?.data?._id;
+
   return (
     <div className="header-container">
       <div className="title-container">
@@ -11,14 +14,16 @@ export const Navbar = () => {
       <div>
         <ul className="navbar-container">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">About</Link>
           </li>
           <li>
-            <Link to="/About">About</Link>
+            <Link to="/Dashboard">Dashboard</Link>
           </li>
-          <li>
-            <Link to="/Profile">Profile</Link>
-          </li>
+          {Auth.loggedIn() && (
+            <li>
+              <Link to={`/Profile/${userId}`}>Profile</Link>
+            </li>
+          )}
           <li>
             {Auth.loggedIn() ? (
               <Link to="/" onClick={() => Auth.logout()}>

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
 
+//Create a user model that will have a username and password to login
+//Password will use bcrypt for more secure passwords
 const userSchema = new Schema({
   username: {
     type: String,
@@ -13,7 +15,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  posts: [{ type: Schema.Types.ObjectId, ref: "post" }],
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 });
 // Set up pre-save middleware to create password
 userSchema.pre("save", async function (next) {

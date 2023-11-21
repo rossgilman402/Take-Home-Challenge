@@ -1,0 +1,27 @@
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.about-container img {
+  height: 400px;
+  width: auto;
+}
+
+.about-container p {
+  font-size: 30px;
+  margin: 50px;
+  padding: 10px 220px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .about-container p {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 20px;
+  }
+}

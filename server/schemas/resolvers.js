@@ -7,12 +7,16 @@ const resolvers = {
       return User.findOne({ _id: userId }).populate("posts");
     },
     getPosts: async () => {
-      return Post.find({});
+      return Post.find({}).populate("user");
+    },
+    getSinglePost: async (_, { postId }) => {
+      return Post.findOne({ _id: postId });
     },
   },
   Mutation: {
     addUser: async (parent, { username, password }) => {
       const user = await User.create({ username, password });
+      console.log(user);
       const token = signToken(user);
       return { token, user };
     },
@@ -33,28 +37,38 @@ const resolvers = {
 
       return { token, user };
     },
-    addPostToUser: async (_, { title, description, url, created }, context) => {
+    addPostToUser: async (_, { userId, title, description, url, created }) => {
       try {
-        //Create the Post then add to user
+        console.log(userId);
+        const user = await User.findOne({ _id: userId });
+
+        if (!user) {
+          console.error(`User not found with ID: ${userId}`);
+          throw new Error("User not found");
+        }
+
         const newPost = await Post.create({
           title,
           description,
           url,
           created,
-          user: context.user_id,
+          user: userId,
         });
+
         console.log(newPost);
 
-        const user = await User.findOne({ _id: context.user._id });
         user.posts.push(newPost._id);
         await user.save();
         console.log(user);
 
+        // Return the new post with the associated user
         return newPost;
-      } catch (Error) {
-        console.log(Error);
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to create post");
       }
     },
+
     // addPostToUser(title: String!, description: String!, url: String!, created: String!): Post
   },
 };

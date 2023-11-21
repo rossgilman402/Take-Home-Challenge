@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+//PostSchema is based on the fetched data given
+//Create mongooseModel that will connect to user because a user will have many posts
 const postSchema = new mongoose.Schema({
   title: {
     type: String,

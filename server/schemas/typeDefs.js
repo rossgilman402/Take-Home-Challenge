@@ -12,6 +12,7 @@ const typeDefs = `
         description: String!
         url: String!
         created: String!
+        user: User
     }
 
     type Auth {
@@ -22,12 +23,13 @@ const typeDefs = `
     type Query {
         getSingleUser(userId: ID!): User
         getPosts: [Post]
+        getSinglePost(postId: ID!): Post
     }
 
     type Mutation {
         addUser(username: String!, password: String!): Auth
         login(username: String!, password: String!): Auth
-        addPostToUser(title: String!, description: String!, url: String!, created: String!): Post
+        addPostToUser(userId: String!, title: String!, description: String!, url: String!, created: String!): Post
     }
 `;
 

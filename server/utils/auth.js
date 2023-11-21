@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const secret = "mysecretssshhhhhhh";
 const expiration = "2h";
 
+//These methods are made to create a jwt token to secure data
+//Mutations can only be runned if a user is logged in and has their token
 module.exports = {
   AuthenticationError: new GraphQLError("Could not authenticate user.", {
     extensions: {

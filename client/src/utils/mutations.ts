@@ -25,3 +25,27 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_POST_TO_USER = gql`
+  mutation AddPostToUser(
+    $userId: String!
+    $title: String!
+    $description: String!
+    $url: String!
+    $created: String!
+  ) {
+    addPostToUser(
+      userId: $userId
+      title: $title
+      description: $description
+      url: $url
+      created: $created
+    ) {
+      _id
+      created
+      description
+      title
+      url
+    }
+  }
+`;
