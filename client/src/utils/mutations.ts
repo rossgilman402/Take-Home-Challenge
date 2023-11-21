@@ -49,3 +49,37 @@ export const ADD_POST_TO_USER = gql`
     }
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation Mutation($postId: ID!) {
+    deletePost(postId: $postId) {
+      _id
+      created
+      description
+      title
+      url
+    }
+  }
+`;
+
+export const EDIT_POST = gql`
+  mutation EditPost(
+    $postId: ID!
+    $title: String
+    $description: String
+    $url: String
+  ) {
+    editPost(
+      postId: $postId
+      title: $title
+      description: $description
+      url: $url
+    ) {
+      _id
+      created
+      description
+      title
+      url
+    }
+  }
+`;

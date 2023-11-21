@@ -1,5 +1,5 @@
 import "./About.css";
-import petLogo from "../../../public/pet-pictures-high-resolution-logo-transparent.png";
+import petLogo from "/pet-pictures-high-resolution-logo-transparent.png";
 
 const About = () => {
   return (

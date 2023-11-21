@@ -30,6 +30,8 @@ const typeDefs = `
         addUser(username: String!, password: String!): Auth
         login(username: String!, password: String!): Auth
         addPostToUser(userId: String!, title: String!, description: String!, url: String!, created: String!): Post
+        deletePost(postId: ID!): Post
+        editPost(postId: ID!, title: String, description: String, url: String): Post
     }
 `;
 

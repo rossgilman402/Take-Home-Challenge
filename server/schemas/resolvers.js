@@ -68,8 +68,36 @@ const resolvers = {
         throw new Error("Failed to create post");
       }
     },
+    deletePost: async (_, { postId }) => {
+      try {
+        const deletedPost = await Post.findByIdAndDelete(postId);
+        if (!deletedPost) {
+          throw new Error("Post not found");
+        }
 
-    // addPostToUser(title: String!, description: String!, url: String!, created: String!): Post
+        return deletedPost;
+      } catch (error) {
+        throw new Error(`Error deleting post: ${error}`);
+      }
+    },
+    editPost: async (_, { postId, title, description, url }) => {
+      try {
+        // Assume your Post model has a method to find and update a post by ID
+        const editedPost = await Post.findByIdAndUpdate(
+          postId,
+          { title, description, url },
+          { new: true, runValidators: true }
+        );
+
+        if (!editedPost) {
+          throw new Error("Post not found");
+        }
+
+        return editedPost;
+      } catch (error) {
+        throw new Error(`Error editing post: ${error.message}`);
+      }
+    },
   },
 };
 
