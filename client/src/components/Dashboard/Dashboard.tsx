@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../utils/query";
 import Auth from "../../utils/auth";
 
-//Types for the data within a post
+// Types for the data within a post
 interface Post {
   _id: string;
   title: string;
@@ -16,18 +16,18 @@ interface Post {
   };
 }
 
-//The type for results when calling getPosts
+// The type for results when calling getPosts
 interface GetPostsData {
   getPosts: Post[];
 }
 
 const Dashboard: React.FC = () => {
-  //State so that we can store input, posts that are checked off and which order is selected
+  // State so that we can store input, posts that are checked off, and which order is selected
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  //Initalizing the useQuery for getting all of the posts to be rendered on the page
+  // Initializing the useQuery for getting all of the posts to be rendered on the page
   const { loading, error, data } = useQuery<GetPostsData>(GET_POSTS);
 
   if (loading) {
@@ -41,14 +41,14 @@ const Dashboard: React.FC = () => {
 
   const posts = data?.getPosts || [];
 
-  //We want to filer the posts based on what the user inputs
+  // We want to filter the posts based on what the user inputs
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchInput.toLowerCase()) ||
       post.description.toLowerCase().includes(searchInput.toLowerCase())
   );
 
-  //We want to sort the post by asc or desc
+  // We want to sort the post by asc or desc
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     const compareFieldA = a.title;
     const compareFieldB = b.title;
@@ -60,14 +60,25 @@ const Dashboard: React.FC = () => {
     }
   });
 
-  //When a certain card is checked off it is added to the selectedPosts state so that we can eventually download
-  //If the post is already selected we want to find it in selected posts state and uncheck it
+  // When a certain card is checked off it is added to the selectedPosts state so that we can eventually download
+  // If the post is already selected we want to find it in selected posts state and uncheck it
   const toggleSelection = (postId: string) => {
     if (selectedPosts.includes(postId)) {
       setSelectedPosts(selectedPosts.filter((id) => id !== postId));
     } else {
       setSelectedPosts([...selectedPosts, postId]);
     }
+  };
+
+  // New function to handle selecting all posts
+  const handleSelectAll = () => {
+    const allPostIds = sortedPosts.map((post) => post._id);
+    setSelectedPosts(allPostIds);
+  };
+
+  // New function to handle clearing all selected posts
+  const handleClearSelection = () => {
+    setSelectedPosts([]);
   };
 
   const handleDownload = () => {
@@ -109,6 +120,14 @@ const Dashboard: React.FC = () => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </div>
+
+      <div className="selection-buttons">
+        <button onClick={handleSelectAll}>Select All</button>
+        <button onClick={handleClearSelection}>Clear Selection</button>
+      </div>
+      <button onClick={handleDownload} disabled={selectedPosts.length === 0}>
+        Download Selected
+      </button>
       {Auth.loggedIn() ? (
         <div className="post-cards-container">
           {sortedPosts.map((post) => (
@@ -129,9 +148,6 @@ const Dashboard: React.FC = () => {
       ) : (
         <p>You need to be logged in to see the posts.</p>
       )}
-      <button onClick={handleDownload} disabled={selectedPosts.length === 0}>
-        Download Selected
-      </button>
     </div>
   );
 };

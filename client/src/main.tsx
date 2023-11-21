@@ -6,6 +6,7 @@ import About from "./components/About/About.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import Profile from "./components/Profile/Profile.tsx";
 import PostDetails from "./components/PostDetails/PostDetail.tsx";
+import Footer from "./components/Footer/Footer.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       <div>
         <Navbar />
         <App />
+        <Footer />
       </div>
     ),
     children: [

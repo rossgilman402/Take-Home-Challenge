@@ -1,13 +1,16 @@
-/* PostDetailPage.css */
-
 .post-detail-container {
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  gap: 25px;
 }
 
 .post-container {
   border: 1px solid #ccc;
   padding: 20px;
-  margin-top: 20px;
+  max-width: 600px;
 }
 
 .post-title {
@@ -18,6 +21,9 @@
 .post-image {
   max-width: 100%;
   height: auto;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
   margin-bottom: 10px;
 }
 
@@ -32,15 +38,10 @@
 
 .edit-button,
 .delete-button {
-  background-color: #3498db;
+  background-color: grey;
   color: #fff;
   padding: 10px;
   border: none;
   cursor: pointer;
   margin-right: 10px;
-}
-
-.edit-button:hover,
-.delete-button:hover {
-  background-color: #217dbb;
 }

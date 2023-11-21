@@ -26,7 +26,7 @@ interface GetUserPostsData {
   getSingleUser: User;
 }
 
-const UserProfile: React.FC = () => {
+const Profile: React.FC = () => {
   //Get the userID from the params within the URL
   const { userId } = useParams<{ userId: string }>();
 
@@ -49,8 +49,17 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="profile-container">
       <h2>Hello {data?.getSingleUser?.username}</h2>
+      {!isCreatingPost && (
+        <button onClick={handleCreatePostClick}>Create a New Post</button>
+      )}
+      {isCreatingPost && (
+        <CreatePostForm
+          userId={userId}
+          onCancel={() => setIsCreatingPost(false)}
+        />
+      )}
       {getSingleUser.posts.length > 0 ? (
         <ul>
           {getSingleUser.posts.map((post) => (
@@ -69,18 +78,8 @@ const UserProfile: React.FC = () => {
       ) : (
         <p>No posts found. Create a new post!</p>
       )}
-
-      {!isCreatingPost && (
-        <button onClick={handleCreatePostClick}>Create a New Post</button>
-      )}
-      {isCreatingPost && (
-        <CreatePostForm
-          userId={userId}
-          onCancel={() => setIsCreatingPost(false)}
-        />
-      )}
     </div>
   );
 };
 
-export default UserProfile;
+export default Profile;

@@ -1,3 +1,5 @@
+/* Your existing styles for the dashboard card */
+
 .post-list-container {
   max-width: 800px;
   margin: 0 auto;
@@ -20,4 +22,106 @@
   max-width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+/* Updated styles for the dashboard card to match the post details card */
+
+.dashboard-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  height: 80vh;
+}
+
+.dashboard-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 600px;
+}
+
+.dashboard-card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.dashboard-card-image {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px; /* Add border-radius to match other cards */
+}
+
+.dashboard-card-description {
+  margin-bottom: 10px;
+}
+
+.dashboard-card-created {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.dashboard-edit-button,
+.dashboard-delete-button {
+  background-color: grey;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Updated styles for the profile card to match the post details card */
+
+.profile-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  height: 80vh;
+}
+
+.profile-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 600px;
+}
+
+.profile-card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.profile-card-image {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px; /* Add border-radius to match other cards */
+}
+
+.profile-card-description {
+  margin-bottom: 10px;
+}
+
+.profile-card-created {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.profile-edit-button,
+.profile-delete-button {
+  background-color: grey;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
 }

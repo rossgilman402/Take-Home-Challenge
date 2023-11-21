@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ONE_POST } from "../../utils/query";
 import { DELETE_POST, EDIT_POST } from "../../utils/mutations";
@@ -23,6 +23,7 @@ interface PostData {
 const PostDetailPage: React.FC = () => {
   //Get the postID from the parameters in the URL
   const { postId } = useParams<{ postId: string }>();
+  const navigate = useNavigate();
 
   //Getting the data from the post that we are looking at using the POSTID from useParams
   const { loading, error, data } = useQuery<PostData>(GET_ONE_POST, {
@@ -53,6 +54,7 @@ const PostDetailPage: React.FC = () => {
       await deletePost({
         variables: { postId: currentPost._id },
       });
+      navigate("/Dashboard");
     } catch (error) {
       console.error("Error deleting post:", error);
     }
