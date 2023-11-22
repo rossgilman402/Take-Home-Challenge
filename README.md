@@ -6,7 +6,7 @@ The goal of the assignment is to fetch json data and render to the page. I devel
 
 ## Installation
 
-In order to install this project you must pull down the code from my github at https://github.com/rossgilman402/Take-Home-Challenge. Run npm i and npm run develop to get the program started. To use you must create an account in order to see all other users posts and to create new posts. You can edit your own posts by navigating to the Profile page and clicking on the specific post. You can download any post on the dashboard once you click on the check box and click the download button.
+In order to install this project you must pull down the code from my github at https://github.com/rossgilman402/Take-Home-Challenge. Run npm i, npm run seeds to access the data given npm run develop to get the program started. I created an account with a username anonymus and password password123. To use you must create an account in order to see all other users posts and to create new posts. You can edit your own posts by navigating to the Profile page and clicking on the specific post. You can download any post on the dashboard once you click on the check box and click the download button.
 
 ## Goals
 
@@ -22,6 +22,10 @@ Create a Custom Hook for Loading and Managing Data
 Manage Global and Local State Effectively (can use context, redux, hooks, etc)
 Document code where necessary
 ```
+
+## Instructions
+
+Start by creating an account! You can now access the dashboard and see all of your posts and your friends posts. If desired you can create a new post by clicking on the create post button on the top of the section. You can also click on any post you have previously created in order to edit them or delete them. Once all of your changes are made you can see them on the dashboard for anyone to see! If you want to search for other pets or sort in ascending or descending order click on the dropdown menu or type in the input field. If you wish to download a picture you can either click on the checkbox on each post or click on select all. If you want to clear the download list then click clear all. Once you selected the pictures to be downloaded click on the download button. To sign out simply click the logout button.
 
 ## License
 
