@@ -3,8 +3,9 @@ import "./Dashboard.css";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../utils/query";
 import Auth from "../../utils/auth";
+import JSZip from "jszip";
 
-// Types for the data within a post
+//Type for the data within a post
 interface Post {
   _id: string;
   title: string;
@@ -16,20 +17,21 @@ interface Post {
   };
 }
 
-// The type for results when calling getPosts
+//The type for the return when calling getPosts
 interface GetPostsData {
   getPosts: Post[];
 }
 
 const Dashboard: React.FC = () => {
-  // State so that we can store input, posts that are checked off, and which order is selected
+  //State to keep track of the asc or desc and the search input and the selected posts
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  // Initializing the useQuery for getting all of the posts to be rendered on the page
+  //Initalize the GET POST so that we can render to the page
   const { loading, error, data } = useQuery<GetPostsData>(GET_POSTS);
 
+  //Show the loading until the data has been retrieved
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -39,16 +41,17 @@ const Dashboard: React.FC = () => {
     return <p>Error fetching posts</p>;
   }
 
+  //get the posts using optional chaining just incase we get null
   const posts = data?.getPosts || [];
 
-  // We want to filter the posts based on what the user inputs
+  //Filter the posts depending on the user input in the textboxs
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchInput.toLowerCase()) ||
       post.description.toLowerCase().includes(searchInput.toLowerCase())
   );
 
-  // We want to sort the post by asc or desc
+  //Sort the posts based on the the drop down menu for asc and desc
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     const compareFieldA = a.title;
     const compareFieldB = b.title;
@@ -60,8 +63,8 @@ const Dashboard: React.FC = () => {
     }
   });
 
-  // When a certain card is checked off it is added to the selectedPosts state so that we can eventually download
-  // If the post is already selected we want to find it in selected posts state and uncheck it
+  //This will change the selected posts depending if the post checkbox is selected
+  //If the checkbox is already selected then we want to unselect and remove from state
   const toggleSelection = (postId: string) => {
     if (selectedPosts.includes(postId)) {
       setSelectedPosts(selectedPosts.filter((id) => id !== postId));
@@ -70,30 +73,45 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // New function to handle selecting all posts
+  //If the user clicks selected all we want to setSelected to every post ID
   const handleSelectAll = () => {
     const allPostIds = sortedPosts.map((post) => post._id);
     setSelectedPosts(allPostIds);
   };
 
-  // New function to handle clearing all selected posts
+  //Empty the selected posts if the user clicks the clear button
   const handleClearSelection = () => {
     setSelectedPosts([]);
   };
 
-  const handleDownload = () => {
-    selectedPosts.forEach((postId) => {
-      const post = sortedPosts.find((p) => p._id === postId);
+  //using the jszip package so that the user can download all of the pictures they desire inside a zip file
+  const handleDownload = async () => {
+    const zip = new JSZip();
 
-      if (post && post.url) {
-        // Create a temporary anchor element
-        const link = document.createElement("a");
-        link.href = post.url;
-        link.download = `${post.title}.jpg`; // You can customize the filename here
+    //Map through all of the posts within selected
+    await Promise.all(
+      selectedPosts.map(async (postId) => {
+        const post = sortedPosts.find((p) => p._id === postId);
 
-        // Trigger a click event on the anchor element
-        link.click();
-      }
+        if (post && post.url) {
+          try {
+            const response = await fetch(post.url);
+            const arrayBuffer = await response.arrayBuffer();
+
+            zip.file(`${post.title}.jpg`, arrayBuffer);
+          } catch (error) {
+            console.error(`Error downloading image for post ${postId}:`, error);
+          }
+        }
+      })
+    );
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(content);
+      link.download = "selected_images.zip";
+
+      link.click();
     });
   };
 
