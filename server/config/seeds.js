@@ -1,6 +1,7 @@
 const db = require("./connection");
 const { User, Post } = require("../models");
 const cleanDB = require("./cleanDB");
+require("dotenv").config();
 
 db.once("open", async () => {
   //Run the cleanDB script on the user and post models
@@ -10,8 +11,8 @@ db.once("open", async () => {
   try {
     //Create a random user for the fetched data that was given
     const user = await User.create({
-      username: "anonymous",
-      password: "password123",
+      username: process.env.SEED_USERNAME,
+      password: process.env.SEED_PASSWORD,
     });
     console.log(user);
 
