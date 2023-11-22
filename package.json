@@ -1,6 +1,10 @@
 {
   "name": "take-home-challenge",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.17.1",
+    "npm": "9.6.7"
+  },
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "index.js",
   "scripts": {
