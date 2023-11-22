@@ -11,8 +11,8 @@ db.once("open", async () => {
   try {
     //Create a random user for the fetched data that was given
     const user = await User.create({
-      username: process.env.SEED_USERNAME,
-      password: process.env.SEED_PASSWORD,
+      username: "anonymous",
+      password: "password123",
     });
     console.log(user);
 
