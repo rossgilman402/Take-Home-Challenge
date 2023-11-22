@@ -6,7 +6,7 @@ The goal of the assignment is to fetch json data and render to the page. I devel
 
 ## Installation
 
-In order to install this project you must pull down the code from my github at https://github.com/rossgilman402/Take-Home-Challenge. Run npm i, npm run seeds to access the data given npm run develop to get the program started. I created an account with a username anonymus and password password123. To use you must create an account in order to see all other users posts and to create new posts. You can edit your own posts by navigating to the Profile page and clicking on the specific post. You can download any post on the dashboard once you click on the check box and click the download button.
+In order to install this project you must pull down the code from my github at https://github.com/rossgilman402/Take-Home-Challenge. Run npm i, npm run seeds to access the data given npm run develop to get the program started. To use you must create an account in order to see all other users posts and to create new posts. You can edit your own posts by navigating to the Profile page and clicking on the specific post. You can download any post on the dashboard once you click on the check box and click the download button.
 
 ## Goals
 
